@@ -8,3 +8,6 @@ This project was done for a grade in Dr Helsings AAI 551-B Course at Stevens Ins
 
 [Trello Link](https://trello.com/b/VwpxD43W/epp-python-weather-project):
 
+gatheringInfo.py
+This file will draw information live from the National Data Buoy Center and gather key information.
+This information will be Wind Speed, Wave Height, Atmospheric Pressure, and will be adjusted to grab more.
