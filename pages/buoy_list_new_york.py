@@ -1,6 +1,7 @@
-from dash import dash, html, dcc, callback, Input, Output, page_registry
+import dash
+from dash import html, dcc
 
-page_registry(__name__, path='pages')
+dash.page_registry(__name__, name='New York', path='/new-york')
 
 # dropdown menu of buoys in selected region
 layout = [html.Div(className='row', children='New York Region Buoy Selection',
