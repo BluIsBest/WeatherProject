@@ -176,4 +176,69 @@ class BB:
 
         # Now we gather the final WSPD Average and return it
         return sum_of_PRES / PRES_counter
-    
+
+
+# In order to pull information about each individual buoy, we define another class that will use the API to gather the
+#       individual information about hte buoy sucha as WSPD, WVHT, PRES, but also the location (longitude, latitude)
+#       and the nearest town to said buoy ==> EX: station_id 44025 is 30 NM south of Islip, NY
+class Buoy:
+    def __init__(self, id):
+        # First we set the ID to the member variable, and call for the information from the NDBC_API
+        self.__id = id
+        buoy = api.get_data(station_id=id,
+                            mode='stdmet',
+                            start_time=given_startTime,
+                            end_time=given_endTime,
+                            as_df=True)
+        # Similar to the BB class, we call the most recent entries and sort them
+        lastFive = buoy.tail().reset_index()
+        lastFive = lastFive.sort_values(by='timestamp', ascending=False)
+        # We set individual lists of the 3 most recent entries (~30 minutes of reporting) in order to still give a value
+        #       in case a buoy does not report (some reports are hourly, on a 30-minute mark, etc.)
+        WSPD_val = lastFive.iloc[0:3, 3].tolist()
+        WVHT_val = lastFive.iloc[0:3, 5].tolist()
+        PRES_val = lastFive.iloc[0:3, 9].tolist()
+
+        # We then check through each of these lists for a non-NaN answer and save it to the self.__VARIABLE
+        for value in WSPD_val:
+            if not math.isnan(value):
+                self.__WSPD = value
+                break
+            else:
+                pass
+
+        for value in WVHT_val:
+            if not math.isnan(value):
+                self.__WVHT = value
+                break
+            else:
+                pass
+
+        for value in PRES_val:
+            if not math.isnan(value):
+                self.__PRES = value
+                break
+            else:
+                pass
+
+        # We then call the station information to gather info such as Latitude and Longitude, and the Name
+        lastFive = api.station(station_id=id, as_df=True)
+        self.__NAME = "".join(str(lastFive.loc['Name'].tolist()))
+        self.__LOC = "".join(str(lastFive.loc['Location'].tolist()))
+
+    # Define the getter functions to get the needed information from individual buoys
+    def getWSPD(self):
+        return self.__WSPD
+
+    def getWVHT(self):
+        return self.__WVHT
+
+    def getPRES(self):
+        return self.__PRES
+
+    def getNAME(self):
+        return self.__NAME
+
+    def getLOC(self):
+        return self.__LOC
+
