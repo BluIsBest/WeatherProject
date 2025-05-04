@@ -16,12 +16,10 @@ layout = html.Div([
     html.Div(id='ny_output')
 ])
 
-
+# callback decorator identifying input and output and a function that takes the input and returns an output, to be displayed on the GUI
 @callback(
-    Output(component_id='ny_output', component_property='children', allow_duplicate=True),
-    Input(component_id='ny_dropdown', component_property='value'),
-    prevent_initial_call='initial_duplicate'
-
+    Output(component_id='ny_output', component_property='children'),
+    Input(component_id='ny_dropdown', component_property='value')
 )
 def display_single_buoy_data(selected_string):
     """
@@ -77,43 +75,3 @@ def display_single_buoy_data(selected_string):
                 f'Average Pressure: {avg_pressure} millibars\n'
                 f'{storm_strength}'
                 )
-
-#@callback(
-#Output(component_id='ny_output', component_property='children', allow_duplicate=True),
-#    Input(component_id='ny_dropdown', component_property='value'),
-#    prevent_initial_call='initial_duplicate'
-#)
-#def display_region_data():
-#    """
-#    :return: display averaged weather data over the selected region and determine safety of storm
-#    """
-#
-#    id_list = ['44025', '44065', 'SDNH4', 'KPTN6', 'MHRN6', 'ROBN4', 'BATN6']
-#    region = gatheringInfo.BB(id_list)
-#
-#    avg_wind_speed = region.get_SSI_WSPD()
-#    avg_wave_height = region.get_SSI_WVHT()
-#    avg_pressure = region.get_SSI_PRES()
-#
-#    # determines storm strength
-#    SSI = (0.5 * ((avg_wind_speed / 60) ** 2) +
-#           0.3 * (930 / avg_pressure) +
-#           0.2 * avg_wave_height / 12)
-#
-#    if SSI < 0.2:
-#        storm_strength = f"The expected storm should be a minimal storm"
-#    if 0.21 < SSI < 0.4:
-#        storm_strength = f"The expected storm should be a moderate storm"
-#    if 0.41 < SSI < 0.6:
-#        storm_strength = f"The expected storm should be a strong storm"
-#    if 0.61 < SSI < 0.8:
-#        storm_strength = f"The expected storm should be a severe storm"
-#    if 0.81 < SSI:
-#        storm_strength = f"The expected storm should be an extreme storm"
-#
-#    return (f"New York Metropolitan Region Weather Data:\n"
-#            f"Wind Speed: {avg_wind_speed} \n"
-#            f"Wave Height: {avg_wave_height} \n"
-#            f"Pressure: {avg_pressure} \n"
-#            f"{storm_strength}")
-#
