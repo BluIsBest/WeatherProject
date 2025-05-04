@@ -14,12 +14,10 @@ layout = html.Div([
     html.Div(id='va_output')
                   ])
 
-
+# callback decorator identifying input and output, and a function that takes in the input, returns an output to be displayed on the GUI
 @callback(
-    Output(component_id='ga_output', component_property='children', allow_duplicate=True),
-    Input(component_id='ga_dropdown', component_property='value'),
-    prevent_initial_call='initial_duplicate'
-
+    Output(component_id='va_output', component_property='children'),
+    Input(component_id='va_dropdown', component_property='value')
 )
 def display_single_buoy_data(selected_string):
     """
