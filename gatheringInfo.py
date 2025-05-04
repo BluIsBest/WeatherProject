@@ -239,6 +239,35 @@ class Buoy:
     def getNAME(self):
         return self.__NAME
 
+            
+# We now define the radial search function to search for stations in a new location, defined by the user
+def Add_New_Location(lat, long):
+    # First we define a int variable to track how many stations we need (7 is a good number)
+    num = 0
+    # Then an empty list to store the station_ids for our eventual BB object definition
+    location_station_list = []
+    
+    # Use the ANDBC_API raidal search feature to grab the nearest stations and allow us to quickly find the station name
+    station_list = api.radial_search(lat=lat, lon=long, radius=350, units='km').iloc[0:10]
+    station_list = station_list.reset_index()
+    
+    for _, row in station_list.iterrows():
+        if row['Includes Meteorology'] is True and num < 8:
+            # If the station gives meteorology data then we add it to the list of stations to use, otherwise goto next
+            location_station_list.append(row['Station'])
+            num += 1
+        else:
+            pass
+
+# Finally we check if the station id list is empty, if it isn't we return the new object to be saved
+#          Otherwise we raise an error and pass
+    if location_station_list != None:
+        newLoc = BB(location_station_list)
+        return newLoc
+    else:
+        pass
+
+
     def getLOC(self):
         return self.__LOC
 
