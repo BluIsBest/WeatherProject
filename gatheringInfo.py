@@ -66,7 +66,8 @@ class BB:
             print(f"Finished API call for buoy: {buoy}")
 
             # Flip resulting Dataframe (using pandas) to see 5 most recent results
-            lastFive = BuoyWspd.tail()
+            lastFive = pd.DataFrame(BuoyWspd)
+            lastFive = lastFive.tail()
 
             # Remove Multi Indexing so we can sort by timestamp
             lastFive = lastFive.reset_index()
@@ -109,7 +110,8 @@ class BB:
             print(f"Finished API call for buoy: {buoy}")
 
             # Flip resulting Dataframe (using pandas) to see 5 most recent results
-            lastFive = BuoyWvht.tail()
+            lastFive = pd.DataFrame(BuoyWvht)
+            lastFive = lastFive.tail()
 
             # Remove Multi Indexing so we can sort by timestamp
             lastFive = lastFive.reset_index()
@@ -131,6 +133,52 @@ class BB:
                     pass
 
         return sum_of_WVHT / WVHT_counter
+
+    def get_SSI_PRES(self):
+        # Set initial counting variable to determine which Buoys are giving the information we are searching for
+        PRES_counter = 0
+        sum_of_PRES = 0.0
+        # Iterate through the list of buoys provided
+        for buoy in self.__id_list:
+            # For tracking purposes
+            print(buoy)
+            # API Call for {buoy} in station list
+            BuoyPres = api.get_data(
+                station_id=buoy,
+                mode='stdmet',
+                start_time=given_startTime,
+                end_time=given_endTime,
+                as_df=True
+            )
+            # For tracking progress
+            print(f"Finished API call for buoy: {buoy}")
+
+            # Flip resulting Dataframe (using pandas) to see 5 most recent results
+            lastFive = pd.DataFrame(BuoyPres)
+            lastFive = lastFive.tail()
+
+            # Remove Multi Indexing so we can sort by timestamp
+            lastFive = lastFive.reset_index()
+            lastFive = lastFive.sort_values(by='timestamp', ascending=False)
+
+            # Check if the stations most recent readings have been submitted, else grab the next furthest back, or if
+            #       not within 3 spaces, skip this buoys reading. If read properly, increment the PRES_counter += 1
+            lastFive = lastFive.iloc[0:3, 9]
+
+            PRES_values = lastFive.tolist()
+            # Iterate through the PRES_values list
+            for value in PRES_values:
+                # If the value is not a nan value (its usually regarded as a float and will break calculations)
+                if not math.isnan(value):
+                    sum_of_PRES += value
+                    PRES_counter += 1
+                    break
+                else:
+                    # Pass if it is a nan
+                    pass
+
+        # Now we gather the final WSPD Average and return it
+        return sum_of_PRES / PRES_counter
 
     def get_SSI_PRES(self):
         # Set initial counting variable to determine which Buoys are giving the information we are searching for
