@@ -15,10 +15,8 @@ layout = html.Div([
                   ])
 
 @callback(
-    Output(component_id='ga_output', component_property='children', allow_duplicate=True),
-    Input(component_id='ga_dropdown', component_property='value'),
-    prevent_initial_call='initial_duplicate'
-
+    Output(component_id='mass_output', component_property='children'),
+    Input(component_id='mass_dropdown', component_property='value')
 )
 def display_single_buoy_data(selected_string):
     """
