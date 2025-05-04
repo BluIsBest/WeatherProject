@@ -15,11 +15,10 @@ layout = html.Div([
     html.Div(id='fl_output')
     ])
 
-
+# callback decorator identifying the input and output, and a function that takes the input and outputs data to the GUI
 @callback(
-    Output(component_id='ny_output', component_property='children', allow_duplicate=True),
-    Input(component_id='ny_dropdown', component_property='value'),
-    prevent_initial_call='initial_duplicate'
+    Output(component_id='fl_output', component_property='children'),
+    Input(component_id='fl_dropdown', component_property='value')
 
 )
 def display_single_buoy_data(selected_string):
