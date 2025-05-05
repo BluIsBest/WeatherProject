@@ -16,8 +16,8 @@ layout = html.Div([
 
 
 @callback(
-    Output(component_id='mass_output', component_property='children'),
-    Input(component_id='mass_dropdown', component_property='value')
+    Output(component_id='sc_output', component_property='children'),
+    Input(component_id='sc_dropdown', component_property='value')
 )
 def display_single_buoy_data(selected_string):
     """
