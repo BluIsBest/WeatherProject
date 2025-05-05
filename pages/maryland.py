@@ -62,13 +62,20 @@ def display_single_buoy_data(selected_string):
         if 0.81 < SSI:
             storm_strength = f"The expected storm should be an extreme storm"
 
-        return (f'Weather conditions at {buoy_name} buoy:\n'
-                f'Wind Speed: {wind_speed} m/s\n'
-                f'Wave Height: {wave_height} m\n'
-                f'Pressure: {pressure} millibars\n'
-                f'New York Metropolitan Region Weather Data:\n'
-                f'Average Wind Speed: {avg_wind_speed} m/s\n'
-                f'Average Wave Height: {avg_wave_height} m\n'
-                f'Average Pressure: {avg_pressure} millibars\n'
-                f'{storm_strength}'
-                )
+        return [f'Weather conditions at {buoy_name} buoy:',
+                html.Br(),
+                f'Wind Speed: {wind_speed} m/s',
+                html.Br(),
+                f'Wave Height: {wave_height} m',
+                html.Br(),
+                f'Pressure: {pressure} millibars',
+                html.Br(),
+                f'New York Metropolitan Region Weather Data:',
+                html.Br(),
+                f'Average Wind Speed: {avg_wind_speed} m/s',
+                html.Br(),
+                f'Average Wave Height: {avg_wave_height} m',
+                html.Br(),
+                f'Average Pressure: {avg_pressure} millibars',
+                storm_strength
+                ]
