@@ -7,9 +7,9 @@ dash.register_page(__name__)
 layout = html.Div([
     html.H5("Input a custom location to access weather data and SSI"),
     html.Div([
-        html.H6('Latitude (in ° ' " format): '),
+        html.H6('Latitude (in °): '),
         dcc.Input(id='lat-custom-input', value='none', type='text'),
-        html.H6('Longitude (in ° ' " format): '),
+        html.H6('Longitude (in °): '),
         dcc.Input(id='long-custom-input', value='none', type='text')
     ]),
     html.Br(),
