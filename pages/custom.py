@@ -8,9 +8,9 @@ layout = html.Div([
     html.H5("Input a custom location to access weather data and SSI"),
     html.Div([
         html.H6('Latitude (in °): '),
-        dcc.Input(id='lat-custom-input', value='none', type='text'),
+        dcc.Input(id='lat-custom-input', type='text', placeholder=''),
         html.H6('Longitude (in °): '),
-        dcc.Input(id='long-custom-input', value='none', type='text')
+        dcc.Input(id='long-custom-input', type='text', placeholder='', debounce=True)
     ]),
     html.Br(),
     html.Div(id='lat-custom-output')
