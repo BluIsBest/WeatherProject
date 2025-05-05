@@ -7,10 +7,14 @@ dash.register_page(__name__)
 layout = html.Div([
     html.H5("Input a custom location to access weather data and SSI"),
     html.Div([
-        dcc.Input(id='custom-input', value='none', type='text')
+        html.H6('Latitude: ')
+        dcc.Input(id='lat-custom-input', value='none', type='text'),
+        html.H6('Longitude: '),
+        dcc.Input(id='long-custom-input', value='none', type='text'),
+        id='custom-input'=['lat-custom-input','long-custom-input']
     ]),
     html.Br(),
-    html.Div(id='custom-output')
+    html.Div(id='lat-custom-output')
 ])
 
 # callback decorator to display weather data based on input, using radial search
